@@ -3,6 +3,11 @@ services:
     nodeserver:
         build:
             context: ./app
+        entrypoint: dockerize -wait tcp://db:3306 -timeout 20s node index.js
+        tty: true
+        volumes: 
+         - ./app:/usr/src/app
+         - /usr/src/app/node_modules
         ports:
             - "3000:3000"
     nginx:
